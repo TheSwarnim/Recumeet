@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Recumeet">
+        <activity android:name=".Feed.AddPostActivity" />
+        <activity android:name=".Feed.LikeCommentActivity" />
+        <activity android:name=".UserProfile.ProfileActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".UserAuth.CreateUserActivity" />
         <activity android:name=".UserAuth.ForgetPasswordActivity" />

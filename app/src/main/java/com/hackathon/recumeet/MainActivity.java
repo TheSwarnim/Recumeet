@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.hackathon.recumeet.Fragments.ChatFragment;
 import com.hackathon.recumeet.Fragments.FeedFragment;
 import com.hackathon.recumeet.Fragments.MeetFragment;
@@ -30,55 +29,34 @@ public class MainActivity extends AppCompatActivity {
     MeetFragment meetFragment;
     SearchFragment searchFragment;
     ProfileFragment profileFragment;
-
     FirebaseUser firebaseUser;
-    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        feedFragment = new FeedFragment();
-        chatFragment = new ChatFragment();
-        meetFragment = new MeetFragment();
-        searchFragment = new SearchFragment();
-        profileFragment = new ProfileFragment();
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        Init();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new FeedFragment()).commit();
     }
+
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.nav_feed:
-                            sFragment = feedFragment;
-                            break;
-
-                        case R.id.nav_chat:
-                            sFragment = chatFragment;
-                            break;
-
-                        case R.id.nav_meet:
-                            sFragment = meetFragment;
-                            break;
-
-                        case R.id.nav_search:
-                            sFragment = searchFragment;
-                            break;
-
-                        case R.id.nav_settings:
-                            sFragment = profileFragment;
-                            break;
-
+                    if (item.getItemId() == R.id.nav_feed) {
+                        sFragment = feedFragment;
+                    } else if (item.getItemId() == R.id.nav_chat) {
+                        sFragment = chatFragment;
+                    } else if (item.getItemId() == R.id.nav_meet) {
+                        sFragment = meetFragment;
+                    } else if (item.getItemId() == R.id.nav_search) {
+                        sFragment = searchFragment;
+                    } else if (item.getItemId() == R.id.nav_settings) {
+                        sFragment = profileFragment;
                     }
 
                     if (sFragment != null) {
@@ -88,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    private void Init() {
+        feedFragment = new FeedFragment();
+        chatFragment = new ChatFragment();
+        meetFragment = new MeetFragment();
+        searchFragment = new SearchFragment();
+        profileFragment = new ProfileFragment();
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+    }
 
     @Override
     public void onBackPressed() {

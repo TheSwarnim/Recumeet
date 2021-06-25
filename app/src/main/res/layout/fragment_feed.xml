@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FeedFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/top1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:weightSum="10">
 
-</FrameLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.6" />
+
+        <EditText
+            android:id="@+id/search_bar2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7.4"
+            android:background="@drawable/back_search"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="@string/search"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textSize="15sp"
+            android:inputType="textAutoComplete"
+            android:autofillHints="@string/search" />
+
+        <ImageView
+            android:id="@+id/add_image"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_plus_circle" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/isfollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp"
+        android:elevation="10dp"
+        android:text="@string/please_follow_someone_to_see_posts"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
