@@ -41,4 +41,11 @@
     <string name="date_of_birth">Date Of Birth</string>
     <string name="reset_password_link_will_be_sent_to_the_following_email">Reset Password link will be sent to the following email</string>
     <string name="send_reset_email">Send Reset Email</string>
+    <string name="posts">Posts</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="bio">Bio</string>
+    <string name="share">Share</string>
+    <string name="about_us">About Us</string>
+    <string name="log_out">Log Out</string>
 </resources>
