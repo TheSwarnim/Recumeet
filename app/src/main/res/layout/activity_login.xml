@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,25 +14,22 @@
         android:weightSum="10">
 
 
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5.1" />
 
 
-
     </LinearLayout>
 
 
-        <ImageView
-            android:layout_marginTop="20dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/logo_recumeet" />
-
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/logo_recumeet" />
 
 
     <LinearLayout
@@ -92,41 +88,40 @@
             android:paddingEnd="20dp" />
 
         <TextView
+            android:id="@+id/forget_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:padding="5dp"
-            android:text="@string/forget_password"
-            android:gravity="end"/>
+            android:text="@string/forget_password" />
 
 
     </LinearLayout>
 
-
-
-        <TextView
-            android:id="@+id/btn_login"
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/log_in"
-            android:background="@drawable/back_btn2"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textSize="15sp"
-            android:layout_marginHorizontal="15dp"
-            android:clickable="true"
-            android:focusable="true"/>
-    <Button
+    <TextView
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="25dp"
-        android:textSize="15sp"
+        android:background="@drawable/back_btn2"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/log_in"
         android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <Button
         android:id="@+id/direct_reg"
-        android:text="Sign Up"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginHorizontal="15dp"
-        android:background="@drawable/back_btn2"/>
-
+        android:layout_marginTop="25dp"
+        android:background="@drawable/back_btn2"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 </LinearLayout>

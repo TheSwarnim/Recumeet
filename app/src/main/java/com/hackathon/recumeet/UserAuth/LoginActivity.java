@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEdit, passEdit;
     String email, password;
     Button directRegTv;
-    TextView loginBtn;
+    TextView loginBtn, forgetPass;
     private static ProgressDialog mProgressDialog;
 
     @Override
@@ -63,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
         directRegTv.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        forgetPass.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
             startActivity(intent);
         });
     }
@@ -106,5 +113,6 @@ public class LoginActivity extends AppCompatActivity {
         passEdit = findViewById(R.id.pass_login);
         directRegTv = findViewById(R.id.direct_reg);
         loginBtn = findViewById(R.id.btn_login);
+        forgetPass = findViewById(R.id.forget_pass);
     }
 }
