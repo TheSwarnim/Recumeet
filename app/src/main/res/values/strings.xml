@@ -28,4 +28,9 @@
     <string name="comments">Comments</string>
     <string name="delete">Delete</string>
     <string name="visit_profile">Visit Profile</string>
+    <string name="post">Post</string>
+    <string name="write_a_caption">Write a Caption</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="add_comment">Add Comment</string>
 </resources>
