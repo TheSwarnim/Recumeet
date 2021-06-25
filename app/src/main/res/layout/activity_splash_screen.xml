@@ -6,10 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreenActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is SplashScreen"
-        android:gravity="center"/>
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="900dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sp_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+    <ImageView
+        android:id="@+id/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        android:layout_width="150dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logo_recumeet">
+
+    </ImageView>
+
+    <ImageView
+        android:layout_below="@+id/logo"
+        android:id="@+id/text_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/recu">
+
+    </ImageView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
