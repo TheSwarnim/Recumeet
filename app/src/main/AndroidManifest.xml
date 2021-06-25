@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Recumeet">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".UserAuth.CreateUserActivity" />
+        <activity android:name=".UserAuth.ForgetPasswordActivity" />
+        <activity android:name=".UserAuth.RegisterActivity" />
+        <activity android:name=".UserAuth.LoginActivity" />
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

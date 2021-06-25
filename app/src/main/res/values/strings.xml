@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Recumeet</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email_address">Email Address</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="enter_your_password">Enter Your Password</string>
+    <string name="log_in">Log In</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="create_password">Create Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="todo">TODO</string>
+    <string name="password">Password</string>
+    <string name="create_your_password">Create Your Password</string>
+    <string name="confirm_your_password">Confirm Your Password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
