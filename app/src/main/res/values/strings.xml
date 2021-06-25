@@ -23,4 +23,9 @@
     <string name="meet">Meet</string>
     <string name="chat">Chat</string>
     <string name="profile">Profile</string>
+    <string name="please_follow_someone_to_see_posts">Please Follow Someone to see posts</string>
+    <string name="likes">Likes</string>
+    <string name="comments">Comments</string>
+    <string name="delete">Delete</string>
+    <string name="visit_profile">Visit Profile</string>
 </resources>

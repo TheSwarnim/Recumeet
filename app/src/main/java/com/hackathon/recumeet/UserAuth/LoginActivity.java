@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hackathon.recumeet.MainActivity;
 import com.hackathon.recumeet.R;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -51,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                         removeSimpleProgressDialog();
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Authentication failed : " + Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
                         removeSimpleProgressDialog();
                     }
                 });
