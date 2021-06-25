@@ -3,8 +3,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="email_address">Email Address</string>
     <string name="example_gmail_com">example@gmail.com</string>
-    <string name="enter_your_password">Enter Your Password</string>
-    <string name="log_in">Log In</string>
+    <string name="enter_your_password">Enter Password</string>
+    <string name="log_in">LOG IN</string>
     <string name="forget_password">Forget Password ?</string>
     <string name="create_password">Create Password</string>
     <string name="confirm_password">Confirm Password</string>
