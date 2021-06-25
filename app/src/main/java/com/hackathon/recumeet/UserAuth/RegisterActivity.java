@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +18,14 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hackathon.recumeet.R;
 
+
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     EditText emailEdit, passEdit, confPassEdit;
     CardView dirLoginTv;
     TextView regBtn;
+    ImageView back;
     String email, password, confPass;
     private static ProgressDialog mProgressDialog;
 
@@ -32,7 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         
         Init();
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         regBtn.setOnClickListener(v -> {
             showSimpleProgressDialog(RegisterActivity.this, "Loading", "Registering User", false);
             email = emailEdit.getText().toString();
@@ -109,5 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
         confPassEdit = findViewById(R.id.pass_reg_conf);
         regBtn = findViewById(R.id.btn_reg);
         dirLoginTv = findViewById(R.id.direct_login);
+        back = findViewById(R.id.login_close);
     }
 }
