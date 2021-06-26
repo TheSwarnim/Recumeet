@@ -24,11 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private Toast backToast;
     BottomNavigationView bottomNavigationView;
     Fragment sFragment = null;
-    FeedFragment feedFragment;
-    ChannelFragment chatFragment;
-    MeetFragment meetFragment;
-    SearchFragment searchFragment;
-    ProfileFragment profileFragment;
     FirebaseUser firebaseUser;
 
     @Override
@@ -44,36 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (item.getItemId() == R.id.nav_feed) {
-                        sFragment = feedFragment;
-                    } else if (item.getItemId() == R.id.nav_chat) {
-                        sFragment = chatFragment;
-                    } else if (item.getItemId() == R.id.nav_meet) {
-                        sFragment = meetFragment;
-                    } else if (item.getItemId() == R.id.nav_search) {
-                        sFragment = searchFragment;
-                    } else if (item.getItemId() == R.id.nav_settings) {
-                        sFragment = profileFragment;
-                    }
-
-                    if (sFragment != null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, sFragment).commit();
-                    }
-
-                    return true;
+            item -> {
+                if (item.getItemId() == R.id.nav_feed) {
+                    sFragment = new FeedFragment();
+                } else if (item.getItemId() == R.id.nav_chat) {
+                    sFragment = new ChannelFragment();
+                } else if (item.getItemId() == R.id.nav_meet) {
+                    sFragment = new MeetFragment();
+                } else if (item.getItemId() == R.id.nav_search) {
+                    sFragment = new SearchFragment();
+                } else if (item.getItemId() == R.id.nav_settings) {
+                    sFragment = new ProfileFragment();
                 }
+
+                if (sFragment != null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, sFragment).commit();
+                }
+
+                return true;
             };
 
     private void Init() {
-        feedFragment = new FeedFragment();
-        chatFragment = new ChannelFragment();
-        meetFragment = new MeetFragment();
-        searchFragment = new SearchFragment();
-        profileFragment = new ProfileFragment();
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);

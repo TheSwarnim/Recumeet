@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_margin="10dp"
+    android:orientation="horizontal"
+    android:weightSum="10">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_photo"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1.5"
+        android:src="@drawable/user"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="24dp">
-
-        <ImageView
-            android:id="@+id/profile_photo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:scaleType="fitXY"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5.2"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/card"
-        android:textColor="#000000" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/card" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_follow"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="3.3"
         android:background="@drawable/back"
-        android:paddingHorizontal="15dp"
-        android:textColor="@color/purple_500"
-        android:textSize="12sp"
-        android:visibility="gone" />
+        android:textSize="14sp"
+        android:text="Following"
+        android:textColor="@color/white" />
 
-</RelativeLayout>
+</LinearLayout>

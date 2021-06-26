@@ -2,6 +2,7 @@ package com.hackathon.recumeet.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-
         return users.size();
     }
 
@@ -119,6 +119,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 } else {
                     button.setText("follow");
                 }
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP ,11);
             }
 
             @Override
