@@ -6,6 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ChannelFragment">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/channel_frag_progressbar"
+        android:visibility="gone"/>
+
     <io.getstream.chat.android.ui.channel.list.header.ChannelListHeaderView
         android:id="@+id/channelListHeaderView"
         android:layout_width="0dp"

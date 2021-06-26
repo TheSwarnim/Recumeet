@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.hackathon.recumeet.FireClass
 import com.hackathon.recumeet.chat.ChatActivity
 import com.hackathon.recumeet.chat.UsersActivity
@@ -44,59 +47,79 @@ class ChannelFragment : Fragment() {
 
         fireClass = FireClass()
         setUpUser()
-        setupChannels()
 
-        binding.channelsView.setChannelDeleteClickListener { channel ->
-            deleteChannel(channel)
-        }
-
-        binding.channelListHeaderView.setOnActionButtonClickListener {
-//            val action = ChannelFragmentDirections.actionChannelFragmentToUsersFragment()
-            val intent = Intent(view.context, UsersActivity::class.java)
-            startActivity(intent)
-//            findNavController().navigate(R.id.action_channelFragment_to_usersFragment)
-//            findNavController().navigate(action)
-        }
-
-        binding.channelsView.setChannelItemClickListener { channel ->
-//            val action = ChannelFragmentDirections.actionChannelFragmentToChatFragment(channel.cid)
-//            findNavController().navigate(action)
-            val intent = Intent(view.context, ChatActivity::class.java)
-            intent.putExtra("CHANNEL_ID", channel.cid)
-            startActivity(intent)
-        }
 
         return view
     }
 
     private fun setUpUser() {
-        var name = "Swarnim"
-        try{
-            name = fireClass.name
-        } catch (e : Exception){
-            Log.i("Channel Fragment Exception", e.toString())
-        }
-        Log.i("Channel Fragment Name", name)
-        showToast(name)
-
         if (client.getCurrentUser() == null) {
-            user = User(
-                id = fireClass.uid,
-                extraData = mutableMapOf(
-                    "name" to name
-                )
-            )
+            binding.channelFragProgressbar.visibility = View.VISIBLE
 
-            val token = client.devToken(user.id)
-            client.connectUser(
-                user = user,
-                token = token
-            ).enqueue { result ->
-                if (result.isSuccess) {
-                    Log.d("ChannelFragment", "Success Connecting the User")
-                } else {
-                    Log.d("ChannelFragment", result.error().message.toString())
+            val ref = Firebase.database.getReference("users").child(fireClass.uid)
+            ref.get()
+                .addOnSuccessListener {
+                    val name = it.child("FName").value.toString() +
+                            " " +
+                            it.child("LName").value.toString()
+
+                    user = User(
+                        id = fireClass.uid,
+                        extraData = mutableMapOf(
+                            "name" to name
+                        )
+                    )
+
+                    val token = client.devToken(user.id)
+                    client.connectUser(
+                        user = user,
+                        token = token
+                    ).enqueue { result ->
+                        if (result.isSuccess) {
+                            Log.d("ChannelFragment", "Success Connecting the User")
+                        } else {
+                            Log.d("ChannelFragment", result.error().message.toString())
+                        }
+                    }
+                    binding.channelFragProgressbar.visibility = View.GONE
+
+                    setupChannels()
+
+                    binding.channelsView.setChannelDeleteClickListener { channel ->
+                        deleteChannel(channel)
+                    }
+
+                    binding.channelListHeaderView.setOnActionButtonClickListener {
+                        val intent = Intent(view?.context, UsersActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    binding.channelsView.setChannelItemClickListener { channel ->
+                        val intent = Intent(view?.context, ChatActivity::class.java)
+                        intent.putExtra("CHANNEL_ID", channel.cid)
+                        startActivity(intent)
+                    }
                 }
+                .addOnFailureListener { OnFailureListener{
+                    Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+                    binding.channelFragProgressbar.visibility = View.GONE
+            }   }
+        } else{
+            setupChannels()
+
+            binding.channelsView.setChannelDeleteClickListener { channel ->
+                deleteChannel(channel)
+            }
+
+            binding.channelListHeaderView.setOnActionButtonClickListener {
+                val intent = Intent(view?.context, UsersActivity::class.java)
+                startActivity(intent)
+            }
+
+            binding.channelsView.setChannelItemClickListener { channel ->
+                val intent = Intent(view?.context, ChatActivity::class.java)
+                intent.putExtra("CHANNEL_ID", channel.cid)
+                startActivity(intent)
             }
         }
     }
