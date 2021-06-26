@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Recumeet</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">SIGN UP</string>
     <string name="email_address">Email Address</string>
     <string name="example_gmail_com">example@gmail.com</string>
-    <string name="enter_your_password">Enter Your Password</string>
-    <string name="log_in">Log In</string>
+    <string name="enter_your_password">Enter Password</string>
+    <string name="log_in">LOG IN</string>
     <string name="forget_password">Forget Password ?</string>
     <string name="create_password">Create Password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -36,4 +36,20 @@
 
     <!--    chats : add your files above @ayush and @shreyash-->
     <string name="api_key">ruyhdxwugpzt</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="date">JAN 01 2020</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="reset_password_link_will_be_sent_to_the_following_email">Reset Password link will be sent to the following email</string>
+    <string name="send_reset_email">Send Reset Email</string>
+    <string name="posts">Posts</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="bio">Bio</string>
+    <string name="share">Share</string>
+    <string name="about_us">About Us</string>
+    <string name="log_out">Log Out</string>
+    <string name="name">Name</string>
 </resources>

@@ -6,15 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hackathon.recumeet.R;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailEdit, passEdit, confPassEdit;
     CardView dirLoginTv;
     TextView regBtn;
+    ImageView back;
     String email, password, confPass;
     private static ProgressDialog mProgressDialog;
 
@@ -30,11 +37,19 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        progressBar.setVisibility(View.GONE);
         Init();
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         regBtn.setOnClickListener(v -> {
-            showSimpleProgressDialog(RegisterActivity.this, "Loading", "Registering User", false);
+            //start
+
+            progressBar.setVisibility(View.VISIBLE);
             email = emailEdit.getText().toString();
             password = passEdit.getText().toString();
             confPass = confPassEdit.getText().toString();
@@ -56,7 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(RegisterActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
                     }
-                    removeSimpleProgressDialog();
+                    //end
+                    progressBar.setVisibility(View.GONE);
                 });
             }
         });
@@ -109,5 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
         confPassEdit = findViewById(R.id.pass_reg_conf);
         regBtn = findViewById(R.id.btn_reg);
         dirLoginTv = findViewById(R.id.direct_login);
+        back = findViewById(R.id.login_close);
     }
 }

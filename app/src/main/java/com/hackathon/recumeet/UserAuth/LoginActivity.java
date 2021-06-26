@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,19 +27,21 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText emailEdit, passEdit;
     String email, password;
-    CardView directRegTv;
-    TextView loginBtn;
+    Button directRegTv;
+    TextView loginBtn, forgetPass;
     private static ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit2);
+        progressBar.setVisibility(View.GONE);
         Init();
 
         loginBtn.setOnClickListener(v -> {
-            showSimpleProgressDialog(LoginActivity.this, "Loading", "Logging In", false);
+            //show
+            progressBar.setVisibility(View.VISIBLE);
             email = emailEdit.getText().toString();
             password = passEdit.getText().toString();
             if(email.length() == 0 || !isEmailValid(email)){
@@ -54,7 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Authentication failed : " + Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
-                        removeSimpleProgressDialog();
+                        //hide
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
@@ -62,6 +68,12 @@ public class LoginActivity extends AppCompatActivity {
 
         directRegTv.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        forgetPass.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
             startActivity(intent);
         });
     }
@@ -105,5 +117,6 @@ public class LoginActivity extends AppCompatActivity {
         passEdit = findViewById(R.id.pass_login);
         directRegTv = findViewById(R.id.direct_reg);
         loginBtn = findViewById(R.id.btn_login);
+        forgetPass = findViewById(R.id.forget_pass);
     }
 }

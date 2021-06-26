@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Recumeet">
         <activity android:name=".chat.UsersActivity"></activity>
         <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".UserProfile.ProfilePosts"></activity>
+        <activity android:name=".UserProfile.EditProfile2Activity" />
+        <activity android:name=".UserProfile.ConnectionActivity" />
         <activity android:name=".Feed.AddPostActivity" />
         <activity android:name=".Feed.LikeCommentActivity" />
         <activity android:name=".UserProfile.ProfileActivity" />

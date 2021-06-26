@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     tools:context=".UserAuth.LoginActivity">
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit2"
+        style="@style/SpinKitView.Large.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        app:SpinKit_Color="@color/stream_ui_accent_red" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,60 +27,24 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <ImageView
-            android:id="@+id/login_close"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1.2"
-            android:contentDescription="@string/todo"
-            android:padding="15dp"
-            android:src="@drawable/back_btn" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5.1" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/direct_reg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_weight="3.2"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/btn_bg"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/sign_up"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
-
-        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:elevation="0dp">
+        android:contentDescription="@string/todo"
+        android:src="@drawable/logo_recumeet" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/logo_recumeet" />
-
-    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,33 +102,41 @@
             android:paddingEnd="20dp" />
 
         <TextView
+            android:id="@+id/forget_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:padding="5dp"
-            android:text="@string/forget_password"
-            android:gravity="end"/>
+            android:text="@string/forget_password" />
+
+
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/back_btn2"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/log_in"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/log_in"
-            android:background="@drawable/back_btn2"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:clickable="true"
-            android:focusable="true"/>
-
-    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/direct_reg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/back_btn2"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 </LinearLayout>
+</RelativeLayout>
