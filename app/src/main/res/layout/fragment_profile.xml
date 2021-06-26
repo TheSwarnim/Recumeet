@@ -56,24 +56,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="4"
+                >
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/profile_pic1"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="75dp">
+                    android:layout_weight="1.3"
+                    android:layout_margin="10dp">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_pic"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="1:1"
                         android:contentDescription="@string/todo"
-                        android:src="@drawable/user" />
+                        android:src="@drawable/user"
+                        tools:ignore="MissingConstraints" />
 
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -81,7 +82,9 @@
                     android:layout_gravity="top"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_weight="3"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="2.7"
                     android:orientation="vertical">
 
                     <TextView
@@ -110,18 +113,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:layout_margin="15dp">
 
                 <LinearLayout
+                    android:id="@+id/post"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/no_posts"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1.25"
@@ -140,15 +148,19 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/followers"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/no_followers"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1.25"
@@ -167,15 +179,19 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/following"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/no_following"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1.25"
@@ -195,7 +211,7 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -204,23 +220,14 @@
 
                 <Button
                     android:id="@+id/editprofile"
-<<<<<<< HEAD
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/edit_profile"
-=======
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/bio"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/back_btn2"
->>>>>>> d1586d9795cdd52739f7c5d58aa6ccb43968fca8
                     android:text="@string/edit_profile"
                     android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/view_post"
@@ -233,9 +240,25 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/resume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resume"
+                    android:textSize="22sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
