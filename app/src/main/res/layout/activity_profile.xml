@@ -185,7 +185,7 @@
                     android:layout_below="@+id/bio"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="22dp"
-                    android:background="@drawable/edit_profile"
+                    android:background="@drawable/back_btn2"
                     android:text="@string/follow"
                     android:textSize="13sp"
                     android:textStyle="bold" />
