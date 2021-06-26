@@ -23,19 +23,32 @@
             android:layout_margin="5dp"
             android:layout_weight="1.6" />
 
-        <EditText
+        <LinearLayout
             android:id="@+id/search_bar2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7.4"
             android:background="@drawable/back_search"
-            android:drawableStart="@drawable/ic_search"
-            android:hint="@string/search"
             android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textSize="15sp"
-            android:inputType="textAutoComplete"
-            android:autofillHints="@string/search" />
+            android:paddingEnd="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:textSize="15sp"
+                android:layout_marginStart="4dp"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+
 
         <ImageView
             android:id="@+id/add_image"
