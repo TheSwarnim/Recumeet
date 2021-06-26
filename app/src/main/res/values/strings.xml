@@ -47,7 +47,7 @@
     <string name="posts">Posts</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
-    <string name="bio">Bio</string>
+    <string name="bio">Bio (Max 20 Chars)</string>
     <string name="share">Share</string>
     <string name="about_us">About Us</string>
     <string name="log_out">Log Out</string>

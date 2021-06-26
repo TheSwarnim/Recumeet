@@ -1,7 +1,6 @@
 package com.hackathon.recumeet.UserAuth;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,54 +13,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hackathon.recumeet.R;
+
+import java.util.Objects;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     EditText emailEdit, passEdit, confPassEdit;
-    CardView dirLoginTv;
-    TextView regBtn;
+    TextView regBtn, dirLoginTv;
     ImageView back;
     String email, password, confPass;
-    private static ProgressDialog mProgressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // start
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        ProgressBar progressBar = findViewById(R.id.spin_kit);
         progressBar.setVisibility(View.GONE);
         Init();
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(view -> onBackPressed());
         regBtn.setOnClickListener(v -> {
-            //start
-
             progressBar.setVisibility(View.VISIBLE);
             email = emailEdit.getText().toString();
             password = passEdit.getText().toString();
             confPass = confPassEdit.getText().toString();
             if (email.length() == 0 || !isEmailValid(email)) {
                 Toast.makeText(RegisterActivity.this, "Invalid Email Address, Please enter valid email", Toast.LENGTH_SHORT).show();
-                removeSimpleProgressDialog();
+                progressBar.setVisibility(View.GONE);
             } else if (password.length() == 0) {
                 Toast.makeText(RegisterActivity.this, "Invalid Password, Please enter valid password", Toast.LENGTH_SHORT).show();
-                removeSimpleProgressDialog();
+                progressBar.setVisibility(View.GONE);
             } else if (!password.equals(confPass)) {
                 Toast.makeText(RegisterActivity.this, "Passwords Do not matches, Enter valid password", Toast.LENGTH_SHORT).show();
-                removeSimpleProgressDialog();
+                progressBar.setVisibility(View.GONE);
             } else {
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -69,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Registration failed : " + Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
                     }
                     //end
                     progressBar.setVisibility(View.GONE);
@@ -88,36 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
-
-    public static void removeSimpleProgressDialog() {
-        try {
-            if (mProgressDialog != null) {
-                if (mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
-                }
-            }
-        } catch (Exception ie) {
-            ie.printStackTrace();
-        }
-    }
-
-    public static void showSimpleProgressDialog(Context context, String title, String msg, boolean isCancelable) {
-        try {
-            if (mProgressDialog == null) {
-                mProgressDialog = ProgressDialog.show(context, title, msg);
-                mProgressDialog.setCancelable(isCancelable);
-            }
-
-            if (!mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-            }
-
-        } catch (Exception ie) {
-            ie.printStackTrace();
-        }
-    }
-
     private void Init() {
         mAuth = FirebaseAuth.getInstance();
         emailEdit = findViewById(R.id.email_reg);
@@ -126,5 +85,18 @@ public class RegisterActivity extends AppCompatActivity {
         regBtn = findViewById(R.id.btn_reg);
         dirLoginTv = findViewById(R.id.direct_login);
         back = findViewById(R.id.login_close);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder ad = new AlertDialog.Builder(RegisterActivity.this);
+        ad.setTitle("Exit");
+        ad.setMessage("Are You Sure To Exit App");
+        ad.setCancelable(true);
+
+        ad.setPositiveButton(android.R.string.yes, (dialog, which) -> super.onBackPressed()).setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alert11 = ad.create();
+        alert11.show();
     }
 }

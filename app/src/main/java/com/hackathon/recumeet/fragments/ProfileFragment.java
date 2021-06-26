@@ -125,9 +125,6 @@ public class ProfileFragment extends Fragment {
                         alert11.show();
                         break;
 
-                    case R.id.aboutus:
-                        break;
-
                     case R.id.Share:
                         shareData();
                         break;
@@ -243,8 +240,8 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-                fullName.setText(user.getName());
-                username.setText(user.getName());
+                fullName.setText(user.getFName() + " " + user.getLName());
+                username.setText(user.getUName());
                 bio.setText(user.getBio());
 
             }

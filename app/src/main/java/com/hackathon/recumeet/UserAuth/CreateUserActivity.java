@@ -7,16 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -73,18 +69,20 @@ public class CreateUserActivity extends AppCompatActivity {
             String userName = user_name.getText().toString();
             String DOB = getTodaysDate();
 
-            HashMap<String, Object> map = new HashMap<>();
-            assert fUser != null;
-            map.put("uId", fUser.getUid());
-            map.put("FName", fName);
-            map.put("LName", lName);
-            map.put("UName", userName);
-            map.put("DOB", DOB);
-            map.put("Bio", "");
-            map.put("ProfileUri", default_pic);
-            FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+            if (fName.length() == 0 || lName.length() == 0 || userName.length() == 0 || DOB.length() == 0) {
+                Toast.makeText(CreateUserActivity.this, "Please enter valid credentials", Toast.LENGTH_SHORT).show();
+            } else {
+                HashMap<String, Object> map = new HashMap<>();
+                assert fUser != null;
+                map.put("uId", fUser.getUid());
+                map.put("FName", fName);
+                map.put("LName", lName);
+                map.put("UName", userName);
+                map.put("DOB", DOB);
+                map.put("Bio", "");
+                map.put("ProfileUri", default_pic);
+                map.put("resumeLink", "NULL");
+                FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).setValue(map).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(CreateUserActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CreateUserActivity.this, MainActivity.class));
@@ -93,9 +91,8 @@ public class CreateUserActivity extends AppCompatActivity {
                     }
                     pd.dismiss();
                     finish();
-                }
-            });
-
+                });
+            }
         });
     }
 
@@ -175,7 +172,17 @@ public class CreateUserActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        FirebaseAuth.getInstance().signOut();
+        AlertDialog.Builder ad = new AlertDialog.Builder(CreateUserActivity.this);
+        ad.setTitle("Exit");
+        ad.setMessage("Are You Sure To Exit App");
+        ad.setCancelable(true);
+
+        ad.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            FirebaseAuth.getInstance().signOut();
+            super.onBackPressed();
+        }).setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alert11 = ad.create();
+        alert11.show();
     }
 }

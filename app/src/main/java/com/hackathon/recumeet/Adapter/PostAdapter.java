@@ -102,7 +102,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final User user = snapshot.getValue(User.class);
                 assert user != null;
-                holder.username.setText(user.getName());
+                holder.username.setText(user.getUName());
                 holder.bio.setText(user.getBio());
 
                 Picasso.get().load(user.getProfileUri()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.imageProfile, new Callback() {

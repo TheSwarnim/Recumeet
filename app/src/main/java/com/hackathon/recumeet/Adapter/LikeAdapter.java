@@ -61,7 +61,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                         Picasso.get().load(user.getProfileUri()).into(holder.profile_pic);
                     }
                 });
-                holder.userName.setText(user.getName());
+                holder.userName.setText(user.getUName());
             }
 
             @Override
