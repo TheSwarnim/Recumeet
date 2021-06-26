@@ -3,13 +3,11 @@ package com.hackathon.recumeet.fragments;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +38,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import io.getstream.chat.android.client.ChatClient;
 
@@ -92,47 +89,30 @@ public class ProfileFragment extends Fragment {
         ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid());
 
         more.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(requireContext(), more);
+            ad = new AlertDialog.Builder(getContext());
+            ad.setTitle("Logout");
+            ad.setMessage("Are You Sure To Logout");
+            ad.setCancelable(true);
 
-            popup.getMenuInflater().inflate(R.menu.profile_menu, popup.getMenu());
-
-            popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.logout:
-                        ad = new AlertDialog.Builder(getContext());
-                        ad.setTitle("Logout");
-                        ad.setMessage("Are You Sure To Logout");
-                        ad.setCancelable(true);
-
-                        ad.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                            // chat logout
-                            if(chatClient.getCurrentUser() != null){
-                                chatClient.disconnect();
-                            }
-
-                            //firebase logout
-                            FirebaseAuth.getInstance().signOut();
-                            Intent intent = new Intent(getContext(), LoginActivity.class);
-                            startActivity(intent);
-                            requireActivity().finish();
-                            Toast.makeText(getContext(), "Logged Out Successfully", Toast.LENGTH_SHORT).show();
-                        }).setNegativeButton(android.R.string.no, (dialog, which) -> {
-                            dialog.dismiss();
-                            Toast.makeText(getContext(), "Logging Out Process cancelled", Toast.LENGTH_SHORT).show();
-                        });
-
-                        AlertDialog alert11 = ad.create();
-                        alert11.show();
-                        break;
-
-                    case R.id.Share:
-                        shareData();
-                        break;
+            ad.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                // chat logout
+                if(chatClient.getCurrentUser() != null){
+                    chatClient.disconnect();
                 }
-                return true;
+
+                //firebase logout
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+                Toast.makeText(getContext(), "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+            }).setNegativeButton(android.R.string.no, (dialog, which) -> {
+                dialog.dismiss();
+                Toast.makeText(getContext(), "Logging Out Process cancelled", Toast.LENGTH_SHORT).show();
             });
 
-            popup.show();
+            AlertDialog alert11 = ad.create();
+            alert11.show();
         });
 
         editProfile.setOnClickListener(v1 -> startActivity(new Intent(getContext(), EditProfile2Activity.class)));
@@ -251,30 +231,6 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void shareData() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Share");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String k;
-                k = Objects.requireNonNull(snapshot.getValue()).toString();
-                Log.v("share", k);
-                Intent intent_share = new Intent(Intent.ACTION_SEND);
-                intent_share.setType("text/plain");
-                String shareSub = "CLiK App";
-                intent_share.putExtra(Intent.EXTRA_SUBJECT, shareSub);
-                intent_share.putExtra(Intent.EXTRA_TEXT, k);
-                startActivity(Intent.createChooser(intent_share, "Share using"));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 
     private void Init() {
