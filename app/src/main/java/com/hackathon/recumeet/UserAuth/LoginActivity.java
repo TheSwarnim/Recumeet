@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +35,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit2);
+        progressBar.setVisibility(View.GONE);
         Init();
 
         loginBtn.setOnClickListener(v -> {
-            showSimpleProgressDialog(LoginActivity.this, "Loading", "Logging In", false);
+            //show
+            progressBar.setVisibility(View.VISIBLE);
             email = emailEdit.getText().toString();
             password = passEdit.getText().toString();
             if(email.length() == 0 || !isEmailValid(email)){
@@ -56,7 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Authentication failed : " + Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
-                        removeSimpleProgressDialog();
+                        //hide
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
