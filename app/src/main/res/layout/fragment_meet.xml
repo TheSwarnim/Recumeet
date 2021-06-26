@@ -28,20 +28,12 @@
             android:contentDescription="@string/todo"
             android:layout_marginVertical="20dp"
             android:src="@drawable/logo_recumeet" />
-        <androidx.cardview.widget.CardView
-            android:layout_marginTop="30dp"
-            android:padding="15dp"
-            app:cardCornerRadius="15dp"
-            android:layout_marginHorizontal="40dp"
-            android:layout_width="match_parent"
 
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/logo1"
-            >
 
             <RelativeLayout
             android:layout_width="wrap_content"
-
+                android:id="@+id/rl"
+                android:layout_below="@+id/logo1"
             android:layout_height="wrap_content">
         <EditText
 
@@ -55,20 +47,44 @@
             android:inputType="textPersonName"
             android:background="@drawable/edittext_bg"
             android:padding="10dp"
-            android:hint="Enter Unique Code" />
+            android:hint="Enter Code" />
         <Button
             android:layout_below="@+id/code"
             android:id="@+id/join"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="27dp"
             android:layout_marginHorizontal="15dp"
             android:background="@drawable/back_btn2"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:text="Join Now"/>
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_below="@id/rl"
+            android:id="@+id/or"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:text="OR"/>
+
+        <Button
+
+            android:id="@+id/host"
+            android:layout_below="@id/or"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/back_btn2"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="host Meet"/>
+
     </RelativeLayout>
 
 </FrameLayout>

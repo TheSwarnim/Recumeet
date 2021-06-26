@@ -120,8 +120,8 @@
                 android:hint="@string/username"
                 android:inputType="text"
                 android:padding="10dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="20dp" />
+                android:paddingHorizontal="20dp"
+                 />
 
         </LinearLayout>
 

@@ -224,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:background="@drawable/edit_profile"
+                    android:background="@drawable/back_btn2"
                     android:text="@string/edit_profile"
                     android:textSize="13sp"
                     android:textStyle="bold"/>
@@ -235,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:background="@drawable/edit_profile"
+                    android:background="@drawable/back_btn2"
                     android:text="@string/view_post"
                     android:textSize="13sp"
                     android:textStyle="bold" />

@@ -18,10 +18,12 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 public class MeetFragment extends Fragment {
     EditText code;
     Button join;
+    Button host;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,6 +31,9 @@ public class MeetFragment extends Fragment {
 
         code = v.findViewById(R.id.code);
         join = v.findViewById(R.id.join);
+        host = v.findViewById(R.id.host);
+        UUID uuid = UUID.randomUUID();
+        String uuidAsString = uuid.toString();
 
         URL serverURL;
 
@@ -43,6 +48,15 @@ public class MeetFragment extends Fragment {
         }
 
 
+
+        host.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
+                        .setRoom(uuidAsString).setWelcomePageEnabled(false).build();
+                JitsiMeetActivity.launch(getContext(),options);
+            }
+        });
 
         join.setOnClickListener(new View.OnClickListener() {
             @Override
