@@ -42,6 +42,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import io.getstream.chat.android.client.ChatClient;
+
 public class ProfileFragment extends Fragment {
 
     View view;
@@ -72,6 +74,8 @@ public class ProfileFragment extends Fragment {
 
     private AlertDialog.Builder ad;
 
+    private ChatClient chatClient = ChatClient.instance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,6 +105,12 @@ public class ProfileFragment extends Fragment {
                         ad.setCancelable(true);
 
                         ad.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            // chat logout
+                            if(chatClient.getCurrentUser() != null){
+                                chatClient.disconnect();
+                            }
+
+                            //firebase logout
                             FirebaseAuth.getInstance().signOut();
                             Intent intent = new Intent(getContext(), LoginActivity.class);
                             startActivity(intent);

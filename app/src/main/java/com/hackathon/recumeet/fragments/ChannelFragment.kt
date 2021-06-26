@@ -70,11 +70,20 @@ class ChannelFragment : Fragment() {
     }
 
     private fun setUpUser() {
+        var name = "Swarnim"
+        try{
+            name = fireClass.name
+        } catch (e : Exception){
+            Log.i("Channel Fragment Exception", e.toString())
+        }
+        Log.i("Channel Fragment Name", name)
+        showToast(name)
+
         if (client.getCurrentUser() == null) {
             user = User(
                 id = fireClass.uid,
                 extraData = mutableMapOf(
-                    "name" to fireClass.name
+                    "name" to name
                 )
             )
 

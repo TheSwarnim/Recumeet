@@ -1,16 +1,11 @@
 package com.hackathon.recumeet;
 
-import android.content.Context;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.Objects;
 
 public class FireClass {
 
@@ -20,21 +15,14 @@ public class FireClass {
 
     public String getName(){
         final String[] name = new String[1];
-        name[0] = "";
 
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
                 .get().addOnSuccessListener(
-                new OnSuccessListener<DataSnapshot>() {
-                    @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
-                        name[0] = dataSnapshot.child("Name").getValue().toString();
-                    }
-                }
-        ).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-
-            }
+                dataSnapshot -> name[0] = dataSnapshot.child("FName").getValue().toString() + " "
+                        + dataSnapshot.child("LName").getValue().toString()
+        ).addOnFailureListener(e -> {
+            Log.i("Database Error", e.toString());
+            name[0] = "";
         });
 
         return name[0];
