@@ -27,7 +27,7 @@
             android:layout_below="@+id/text"
             android:contentDescription="@string/todo"
             android:layout_marginVertical="20dp"
-            android:src="@drawable/video" />
+            android:src="@drawable/video_icon" />
 
 
             <RelativeLayout
