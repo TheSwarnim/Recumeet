@@ -55,7 +55,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         holder.btnFollow.setVisibility(View.VISIBLE);
 
-        holder.fullName.setText(user.getName());
+        holder.fullName.setText(user.getFName() + " " + user.getLName());
         holder.bio.setText(user.getBio());
 
         Picasso.get().load(user.getProfileUri()).into(holder.profile_pic);

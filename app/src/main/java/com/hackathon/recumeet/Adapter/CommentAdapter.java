@@ -84,7 +84,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     }
                 });
 
-                holder.userName.setText(user.getName());
+                holder.userName.setText(user.getUName());
             }
 
             @Override

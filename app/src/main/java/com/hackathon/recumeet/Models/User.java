@@ -2,21 +2,24 @@ package com.hackathon.recumeet.Models;
 
 public class User {
     String uId;
-    String Bio;
-    String Name;
+    String UName;
+    String FName, LName;
     String ProfileUri;
-    String status;
+    String DOB;
+    String Bio;
 
 
     public User() {
     }
 
-    public User(String uId, String bio, String name, String profileUri, String status) {
+    public User(String uId, String UName, String FName, String LName, String profileUri, String DOB, String bio) {
         this.uId = uId;
-        this.Bio = bio;
-        this.Name = name;
+        this.UName = UName;
+        this.FName = FName;
+        this.LName = LName;
         this.ProfileUri = profileUri;
-        this.status = status;
+        this.DOB = DOB;
+        this.Bio = bio;
     }
 
     public String getuId() {
@@ -27,20 +30,28 @@ public class User {
         this.uId = uId;
     }
 
-    public String getBio() {
-        return Bio;
+    public String getUName() {
+        return UName;
     }
 
-    public void setBio(String bio) {
-        Bio = bio;
+    public void setUName(String UName) {
+        this.UName = UName;
     }
 
-    public String getName() {
-        return Name;
+    public String getFName() {
+        return FName;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setFName(String FName) {
+        this.FName = FName;
+    }
+
+    public String getLName() {
+        return LName;
+    }
+
+    public void setLName(String LName) {
+        this.LName = LName;
     }
 
     public String getProfileUri() {
@@ -51,11 +62,19 @@ public class User {
         ProfileUri = profileUri;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDOB() {
+        return DOB;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    public String getBio() {
+        return Bio;
+    }
+
+    public void setBio(String bio) {
+        Bio = bio;
     }
 }
