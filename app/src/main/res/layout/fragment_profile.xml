@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".fragments.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar2"
@@ -37,11 +37,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_logout" />
-
-
             </RelativeLayout>
-
-
         </Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -51,167 +47,187 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/appbar2">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/user_info"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:orientation="horizontal"
+                android:weightSum="4">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/profile_pic1"
-                    app:cardCornerRadius="75dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp">
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="75dp">
 
                     <ImageView
                         android:id="@+id/profile_pic"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/user" />
 
                 </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_pic1"
-                    android:layout_centerHorizontal="true"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
                     android:layout_marginTop="15dp"
-                    android:gravity="center">
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
 
-
-                    <RelativeLayout
-                        android:id="@+id/posts"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/full_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:text="@string/full_name"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:id="@+id/no_posts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="35sp" />
+                    <TextView
+                        android:id="@+id/bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/bio"
+                        android:textSize="14sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:id="@+id/text_posts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/no_posts"
-                            android:text="@string/posts"
-                            android:textSize="18sp" />
-                    </RelativeLayout>
+                </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/followers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_toEndOf="@+id/posts"
-                        android:gravity="center">
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/no_followers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="35sp" />
-
-                        <TextView
-                            android:id="@+id/text_followers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/no_followers"
-                            android:text="@string/followers"
-                            android:textSize="18sp" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/following"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_toEndOf="@+id/followers"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/no_following"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="35sp" />
-
-                        <TextView
-                            android:id="@+id/text_following"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/no_following"
-                            android:text="@string/following"
-                            android:textSize="18sp" />
-
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/user_info1"
+            <LinearLayout
+                android:id="@+id/user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/user_info">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <TextView
-                    android:id="@+id/full_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/full_name"
-                    android:textSize="18sp"
-                    tools:ignore="RtlSymmetry" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/bio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/full_name"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/bio"
-                    android:textSize="14sp"
-                    tools:ignore="RtlSymmetry" />
+                    <TextView
+                        android:id="@+id/no_posts"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.25"
+                        android:textSize="35sp"
+                        tools:ignore="NestedWeights" />
+
+                    <TextView
+                        android:id="@+id/text_posts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.75"
+                        android:text="@string/posts"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/no_followers"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.25"
+                        android:textSize="35sp"
+                        tools:ignore="NestedWeights" />
+
+                    <TextView
+                        android:id="@+id/text_followers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.75"
+                        android:text="@string/followers"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/no_following"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.25"
+                        android:textSize="35sp"
+                        tools:ignore="NestedWeights" />
+
+                    <TextView
+                        android:id="@+id/text_following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.75"
+                        android:text="@string/following"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/editprofile"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bio"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
                     android:background="@drawable/edit_profile"
                     android:text="@string/edit_profile"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/view_post"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_profile"
+                    android:text="@string/view_post"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-            </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_info1"
-                android:layout_marginTop="15dp" />
-        </RelativeLayout>
+
+
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

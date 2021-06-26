@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,47 +45,24 @@ import io.getstream.chat.android.client.ChatClient;
 public class ProfileFragment extends Fragment {
 
     View view;
-    private ImageView profile_pic;
-    private TextView fullName;
-    private TextView bio;
+    private ImageView profile_pic, more;
+    private TextView fullName, bio, noOfPosts, noOffollowers, noOffollowing, username;
     private Button editProfile;
 
-    private TextView noOfPosts;
-    private TextView noOffollowers;
-    private TextView noOffollowing;
-
-    private RelativeLayout followers;
-    private RelativeLayout following;
-
-    private List<String> followingList;
-    private List<String> followerList;
-
-    private TextView username;
-    private ImageView more;
+    private LinearLayout followers, following;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference ref1;
-
-    private List<Post> myPhotoList;
-    private PhotoAdapter photoAdpatar;
-    private RecyclerView recyclerView;
 
     private AlertDialog.Builder ad;
 
     private ChatClient chatClient = ChatClient.instance();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         Init();
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-
-        photoAdpatar = new PhotoAdapter(getContext(), myPhotoList, firebaseUser.getUid());
-        recyclerView.setAdapter(photoAdpatar);
 
         ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid());
 
@@ -99,13 +77,12 @@ public class ProfileFragment extends Fragment {
                 if(chatClient.getCurrentUser() != null){
                     chatClient.disconnect();
                 }
-
                 //firebase logout
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
-                requireActivity().finish();
                 Toast.makeText(getContext(), "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+                requireActivity().finish();
             }).setNegativeButton(android.R.string.no, (dialog, which) -> {
                 dialog.dismiss();
                 Toast.makeText(getContext(), "Logging Out Process cancelled", Toast.LENGTH_SHORT).show();
@@ -144,17 +121,7 @@ public class ProfileFragment extends Fragment {
         ref5.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myPhotoList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
-                    assert post != null;
-                    if (post.getPublisher().equals(firebaseUser.getUid()) && post.getImageUri() != null) {
-                        myPhotoList.add(post);
-                    }
-                }
-                noOfPosts.setText(String.valueOf(myPhotoList.size()));
-                Collections.reverse(myPhotoList);
-                photoAdpatar.notifyDataSetChanged();
+                noOfPosts.setText(dataSnapshot.getChildrenCount() + "");
             }
 
             @Override
@@ -251,10 +218,5 @@ public class ProfileFragment extends Fragment {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        myPhotoList = new ArrayList<>();
-        followingList = new ArrayList<>();
-        followerList = new ArrayList<>();
-
-        recyclerView = view.findViewById(R.id.recycler_view);
     }
 }
