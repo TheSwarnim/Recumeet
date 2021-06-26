@@ -32,10 +32,10 @@
 
                 <ImageView
                     android:id="@+id/profile_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_logout" />
             </RelativeLayout>
         </Toolbar>
@@ -204,11 +204,20 @@
 
                 <Button
                     android:id="@+id/editprofile"
+<<<<<<< HEAD
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/edit_profile"
+=======
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/bio"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/back_btn2"
+>>>>>>> d1586d9795cdd52739f7c5d58aa6ccb43968fca8
                     android:text="@string/edit_profile"
                     android:textSize="13sp"
                     android:textStyle="bold" />

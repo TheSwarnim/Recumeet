@@ -26,7 +26,7 @@
         <LinearLayout
             android:id="@+id/search_bar2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="35dp"
             android:layout_weight="7.4"
             android:background="@drawable/back_search"
             android:paddingStart="15dp"
