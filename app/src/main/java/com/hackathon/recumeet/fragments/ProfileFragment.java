@@ -1,4 +1,4 @@
-package com.hackathon.recumeet.Fragments;
+package com.hackathon.recumeet.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.hackathon.recumeet.MainActivity;
 import com.hackathon.recumeet.R;
 import com.hackathon.recumeet.UserAuth.LoginActivity;
-
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 

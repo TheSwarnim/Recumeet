@@ -10,4 +10,8 @@
     <color name="grey">#888787</color>
     <color name="darkGrey">#515151</color>
     <color name="skyBlue">#82A2F3</color>
+
+<!--    chat fragment: apli files upar daala @ayoush and @shreyas-->
+    <color name="toolbarBarColor">@color/white</color>
+    <color name="titleColor">@color/black</color>
 </resources>
