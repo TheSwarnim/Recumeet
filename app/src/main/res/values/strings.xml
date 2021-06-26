@@ -33,6 +33,9 @@
     <string name="open_gallery">Open Gallery</string>
     <string name="open_camera">Open Camera</string>
     <string name="add_comment">Add Comment</string>
+
+    <!--    chats : add your files above @ayush and @shreyash-->
+    <string name="api_key">htb2mskydcwk</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="username">Username</string>

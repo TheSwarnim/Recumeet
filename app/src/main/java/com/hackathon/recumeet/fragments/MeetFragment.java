@@ -1,4 +1,4 @@
-package com.hackathon.recumeet.Fragments;
+package com.hackathon.recumeet.fragments;
 
 import android.os.Bundle;
 
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.hackathon.recumeet.R;
 
-public class ChatFragment extends Fragment {
+public class MeetFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        return inflater.inflate(R.layout.fragment_meet, container, false);
     }
 }

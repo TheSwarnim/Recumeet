@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.hackathon.recumeet.Fragments.ChatFragment;
-import com.hackathon.recumeet.Fragments.FeedFragment;
-import com.hackathon.recumeet.Fragments.MeetFragment;
-import com.hackathon.recumeet.Fragments.ProfileFragment;
-import com.hackathon.recumeet.Fragments.SearchFragment;
+import com.hackathon.recumeet.fragments.FeedFragment;
+import com.hackathon.recumeet.fragments.ChannelFragment;
+import com.hackathon.recumeet.fragments.MeetFragment;
+import com.hackathon.recumeet.fragments.ProfileFragment;
+import com.hackathon.recumeet.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Fragment sFragment = null;
     FeedFragment feedFragment;
-    ChatFragment chatFragment;
+    ChannelFragment chatFragment;
     MeetFragment meetFragment;
     SearchFragment searchFragment;
     ProfileFragment profileFragment;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void Init() {
         feedFragment = new FeedFragment();
-        chatFragment = new ChatFragment();
+        chatFragment = new ChannelFragment();
         meetFragment = new MeetFragment();
         searchFragment = new SearchFragment();
         profileFragment = new ProfileFragment();

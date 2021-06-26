@@ -1,4 +1,4 @@
-package com.hackathon.recumeet.Fragments;
+package com.hackathon.recumeet.fragments;
 
 import android.os.Bundle;
 
