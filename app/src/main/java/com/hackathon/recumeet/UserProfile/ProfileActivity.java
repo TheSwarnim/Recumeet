@@ -1,18 +1,19 @@
 package com.hackathon.recumeet.UserProfile;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hackathon.recumeet.Adapter.PhotoAdapter;
+import com.google.firebase.storage.StorageReference;
 import com.hackathon.recumeet.Models.Post;
 import com.hackathon.recumeet.Models.User;
 import com.hackathon.recumeet.R;
@@ -29,76 +30,44 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private String publisherId;
 
     private ImageView profile_pic;
-    private TextView username, user_name, bio;
+    private TextView fullName, bio, noOfPosts, noOFFollowers, noOfFollowing, username, reusmeText, dob_text;
+    private LinearLayout post, followers, following, resume;
 
-    private TextView noOfPosts;
-
-    private Button follow;
+    private Button follow, viewPosts;
     private FirebaseUser firebaseUser;
-    private ProgressDialog pd;
 
-    private int posts = 0;
-
-    private List<Post> myPhotoList;
-    private PhotoAdapter photoAdapter;
-
+    private static ProgressDialog mProgressDialog;
+    private String pdf_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        publisherId = getIntent().getStringExtra("publisherId");
+        Init();
+        loadActivity();
 
-        profile_pic = findViewById(R.id.profile_pic);
-        username = findViewById(R.id.full_name);
-        user_name = findViewById(R.id.user_name);
-        bio = findViewById(R.id.bio);
+        viewPosts.setOnClickListener(v -> openPosts());
+        post.setOnClickListener(v -> openPosts());
 
-        noOfPosts = findViewById(R.id.no_posts);
-        TextView noOFFollowers = findViewById(R.id.no_followers);
-        TextView noOfFollowing = findViewById(R.id.no_following);
-
-        follow = findViewById(R.id.follow);
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        myPhotoList = new ArrayList<>();
-        RecyclerView recyclerView_profile = findViewById(R.id.recycler_view_profile);
-
-        recyclerView_profile.setHasFixedSize(true);
-        recyclerView_profile.setLayoutManager(new GridLayoutManager(ProfileActivity.this, 3));
-
-        photoAdapter = new PhotoAdapter(ProfileActivity.this, myPhotoList, publisherId);
-        recyclerView_profile.setAdapter(photoAdapter);
-
-        RelativeLayout folloewer = findViewById(R.id.followers);
-        RelativeLayout following = findViewById(R.id.following);
-
-        folloewer.setOnClickListener(v -> {
+        followers.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, ConnectionActivity.class);
             intent.putExtra("Uid", publisherId);
             startActivity(intent);
         });
-
 
         following.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, ConnectionActivity.class);
             intent.putExtra("Uid", publisherId);
             startActivity(intent);
         });
-
-        getUserData();
-
-        setFollowStatus(follow);
 
         follow.setOnClickListener(v -> {
             if (follow.getText().toString().equals("Follow")) {
@@ -114,44 +83,96 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        pd = new ProgressDialog(ProfileActivity.this);
-        pd.setMessage("Getting Follow Status");
-        pd.show();
-
-        setNoOfPosts(noOfPosts);
-        setnoOFFollowers(noOFFollowers);
-        setnoOFFollowing(noOfFollowing);
-        getPost();
-
-        pd.dismiss();
-
-    }
-
-    private void getPost() {
-        DatabaseReference ref5 = FirebaseDatabase.getInstance().getReference().child("posts");
-        ref5.keepSynced(true);
-
-        ref5.addValueEventListener(new ValueEventListener() {
+        resume.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myPhotoList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
-                    assert post != null;
-                    if (post.getPublisher().equals(publisherId) && post.getImageUri() != null) {
-                        myPhotoList.add(post);
-                    }
-                }
-                noOfPosts.setText(String.valueOf(myPhotoList.size()));
-                Collections.reverse(myPhotoList);
-                photoAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                openUpload();
             }
         });
+    }
+
+    private void openUpload() {
+        if (reusmeText.getText().equals("Click here to see resume")) {
+            viewResume();
+        } else {
+            Toast.makeText(ProfileActivity.this, "Resume is not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void viewResume() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
+        startActivity(browserIntent);
+    }
+
+    private void loadActivity() {
+        showSimpleProgressDialog(ProfileActivity.this, "Loading", "Loading profile", false);
+        getUserData();
+        setnoOFFollowers(noOFFollowers);
+        setnoOFFollowing(noOfFollowing);
+        setNoOfPosts(noOfPosts);
+        getResume(reusmeText);
+        setFollowStatus(follow);
+        setDOB(dob_text);
+        removeSimpleProgressDialog();
+    }
+
+    private void setDOB(TextView dob_text) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("DOB");
+        ref.get().addOnCompleteListener(task -> {
+            if(!task.isSuccessful()){
+                Toast.makeText(ProfileActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            } else {
+                dob_text.setText(Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getValue()).toString());
+            }
+        });
+    }
+
+    private void getResume(TextView reusmeText) {
+        DatabaseReference ref9 = FirebaseDatabase.getInstance().getReference().child("users").child(publisherId).child("resumeLink");
+        ref9.get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                reusmeText.setText("Resume is not available this time");
+                Toast.makeText(ProfileActivity.this, Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                if (Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getValue()).toString().equals("NULL")) {
+                    reusmeText.setText("Resume is not Uploaded this time, Upload Resume");
+                } else {
+                    pdf_url = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getValue()).toString();
+                    reusmeText.setText("Click here to see resume");
+                }
+            }
+        });
+    }
+
+    private void openPosts() {
+        Intent intent = new Intent(ProfileActivity.this, ProfilePosts.class);
+        intent.putExtra("publisherId", publisherId);
+        startActivity(intent);
+    }
+
+    private void Init() {
+        publisherId = getIntent().getStringExtra("publisherId");
+
+        profile_pic = findViewById(R.id.profile_pic);
+        username = findViewById(R.id.full_name);
+        fullName = findViewById(R.id.user_name);
+        bio = findViewById(R.id.bio);
+
+        noOfPosts = findViewById(R.id.no_posts);
+        noOFFollowers = findViewById(R.id.no_followers);
+        noOfFollowing = findViewById(R.id.no_following);
+        reusmeText = findViewById(R.id.resume_text);
+
+        follow = findViewById(R.id.follow);
+        viewPosts = findViewById(R.id.view_post);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        post = findViewById(R.id.post);
+        followers = findViewById(R.id.followers);
+        following = findViewById(R.id.following);
+        resume = findViewById(R.id.resume);
+        dob_text = findViewById(R.id.dob_text);
     }
 
     private void setnoOFFollowing(final TextView noOfFollowing) {
@@ -168,7 +189,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
             }
         });
     }
@@ -187,7 +207,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
             }
         });
     }
@@ -199,6 +218,7 @@ public class ProfileActivity extends AppCompatActivity {
         ref4.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int posts = 0;
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Post post = snapshot1.getValue(Post.class);
                     assert post != null;
@@ -213,7 +233,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
             }
         });
     }
@@ -236,7 +255,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
             }
         });
     }
@@ -264,17 +282,45 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-                username.setText(user.getFName() + " " + user.getLName());
-                user_name.setText(user.getUName());
+                fullName.setText(user.getFName() + " " + user.getLName());
+                username.setText(user.getUName());
                 bio.setText(user.getBio());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
             }
         });
+    }
+
+    public static void removeSimpleProgressDialog() {
+        try {
+            if (mProgressDialog != null) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+            }
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
+    }
+
+    public static void showSimpleProgressDialog(Context context, String title, String msg, boolean isCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = ProgressDialog.show(context, title, msg);
+                mProgressDialog.setCancelable(isCancelable);
+            }
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
     }
 
 }

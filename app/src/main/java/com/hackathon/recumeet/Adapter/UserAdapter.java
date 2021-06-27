@@ -63,9 +63,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         isFollowing(user.getuId(), holder.btnFollow);
 
-        if (user.getuId().equals(firebaseUser.getUid())) {
-            holder.btnFollow.setVisibility(View.GONE);
-        }
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ProfileActivity.class);
             intent.putExtra("publisherId", user.getuId());

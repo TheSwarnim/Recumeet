@@ -53,4 +53,9 @@
     <string name="log_out">Log Out</string>
     <string name="name">Name</string>
     <string name="follow">Follow</string>
+    <string name="view_post">View Posts</string>
+    <string name="resume">resume</string>
+    <string name="upload_resume">Upload Resume</string>
+    <string name="view_resume">View Resume</string>
+    <string name="user_posts">User Posts</string>
 </resources>

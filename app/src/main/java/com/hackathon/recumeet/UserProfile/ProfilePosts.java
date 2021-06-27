@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,6 @@ public class ProfilePosts extends AppCompatActivity {
     private RecyclerView profile_posts;
     private PostAdapter postAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,8 @@ public class ProfilePosts extends AppCompatActivity {
         mPosts = new ArrayList<>();
 
         profile_posts = findViewById(R.id.profile_posts);
+
+        findViewById(R.id.close).setOnClickListener(v -> finish());
 
         profile_posts.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProfilePosts.this);

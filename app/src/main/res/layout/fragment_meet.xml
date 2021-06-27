@@ -3,12 +3,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.MeetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:text="VideoMeet"
+            android:id="@+id/text"
+            android:layout_marginStart="20dp"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:id="@+id/logo1"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/text"
+            android:contentDescription="@string/todo"
+            android:layout_marginVertical="20dp"
+            android:src="@drawable/video_icon" />
+
+
+            <RelativeLayout
+            android:layout_width="wrap_content"
+                android:id="@+id/rl"
+                android:layout_below="@+id/logo1"
+            android:layout_height="wrap_content">
+        <EditText
+
+            android:layout_centerHorizontal="true"
+            android:id="@+id/code"
+            android:layout_marginTop="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:layout_marginHorizontal="35dp"
+            android:inputType="textPersonName"
+            android:background="@drawable/edittext_bg"
+            android:padding="10dp"
+            android:hint="Enter Code" />
+        <Button
+            android:layout_below="@+id/code"
+            android:id="@+id/join"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="35dp"
+            android:background="@drawable/back_btn2"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="Join Now"/>
+            </RelativeLayout>
+
+        <TextView
+            android:layout_below="@id/rl"
+            android:id="@+id/or"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:text="OR"/>
+
+        <Button
+
+            android:id="@+id/host"
+            android:layout_below="@id/or"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="35dp"
+            android:background="@drawable/back_btn2"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="host Meet"/>
+
+    </RelativeLayout>
 
 </FrameLayout>

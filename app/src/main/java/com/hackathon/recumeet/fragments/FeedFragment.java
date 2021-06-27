@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,11 +63,9 @@ public class FeedFragment extends Fragment {
 
         search.setOnClickListener(v -> {
             Fragment fragment = new SearchFragment();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragement_container, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName())
+                    .commit();
         });
 
         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -134,11 +133,13 @@ public class FeedFragment extends Fragment {
 
                             postAdapter = new PostAdapter(getContext(), postList);
                             recyclerViewPosts.setAdapter(postAdapter);
+                            pd.dismiss();
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
                         }
                     });
                 }
