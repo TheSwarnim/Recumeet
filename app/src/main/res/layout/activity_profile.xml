@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/date_of_birth"
                     android:layout_marginStart="10dp"
-                    android:textSize="22sp" />
+                    android:textSize="17sp" />
 
             </LinearLayout>
 

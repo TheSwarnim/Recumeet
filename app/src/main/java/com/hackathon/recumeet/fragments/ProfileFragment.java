@@ -89,8 +89,8 @@ public class ProfileFragment extends Fragment {
 
         more.setOnClickListener(v -> {
             ad = new AlertDialog.Builder(getContext());
-            ad.setTitle("Logout");
-            ad.setMessage("Are You Sure To Logout");
+            ad.setTitle("Log Out");
+            ad.setMessage("Are you Sure?");
             ad.setCancelable(true);
 
             ad.setPositiveButton(android.R.string.yes, (dialog, which) -> {
