@@ -1,6 +1,8 @@
 package com.hackathon.recumeet.fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +48,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import io.getstream.chat.android.client.ChatClient;
 
@@ -54,13 +58,14 @@ public class ProfileFragment extends Fragment {
 
     View view;
     private ImageView profile_pic, more;
-    private TextView fullName, bio, noOfPosts, noOffollowers, noOffollowing, username;
+    private TextView fullName, bio, noOfPosts, noOffollowers, noOffollowing, username, reusmeText;
     private Button editProfile, viewPosts;
 
     private LinearLayout post, followers, following, resume;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference ref1;
+    String pdf_url;
 
     private AlertDialog.Builder ad;
 
@@ -68,14 +73,16 @@ public class ProfileFragment extends Fragment {
 
     StorageReference storageReference;
     DatabaseReference databaseReference;
+    private static ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
+
         Init();
 
-        ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid());
+        loadActivity();
 
         viewPosts.setOnClickListener(v -> openPosts());
         post.setOnClickListener(v -> openPosts());
@@ -120,21 +127,68 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
         
-        resume.setOnClickListener(v -> UploadDoc());
-
-        getUserData();
-        setNoOfFollowers(noOffollowers);
-        setNoOfFollowing(noOffollowing);
-        getPostData(noOfPosts);
+        resume.setOnClickListener(v -> openUpload());
 
         return view;
     }
 
-    private void UploadDoc() {
-        selectPDF();
+    private void openUpload() {
+        if(reusmeText.getText().equals("Click here to see resume")){
+            ad = new AlertDialog.Builder(getContext());
+            ad.setTitle("View Resume");
+            ad.setMessage("Want to upload new resume or view resume");
+            ad.setCancelable(true);
+
+            ad.setPositiveButton(R.string.upload_resume, (dialog, which) -> {
+                selectPDF();
+                dialog.dismiss();
+            }).setNegativeButton(R.string.view_resume, (dialog, which) -> {
+                viewResume();
+                dialog.dismiss();
+            });
+
+            AlertDialog alert11 = ad.create();
+            alert11.show();
+
+        } else {
+            selectPDF();
+        }
+    }
+
+    private void viewResume() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
+        startActivity(browserIntent);
+    }
+
+    private void loadActivity() {
+        showSimpleProgressDialog(getContext(), "Loading", "Loading profile", false);
+        getUserData();
+        setNoOfFollowers(noOffollowers);
+        setNoOfFollowing(noOffollowing);
+        getPostData(noOfPosts);
+        getResume(reusmeText);
+        removeSimpleProgressDialog();
+    }
+
+    private void getResume(TextView reusmeText) {
+        DatabaseReference ref9 = FirebaseDatabase.getInstance().getReference().child("users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("resumeLink");
+        ref9.get().addOnCompleteListener(task -> {
+            if(!task.isSuccessful()){
+                reusmeText.setText("Resume is not available this time");
+                Toast.makeText(getContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                if(Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getValue()).toString().equals("NULL")){
+                    reusmeText.setText("Resume is not Uploaded this time, Upload Resume");
+                } else {
+                    pdf_url = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getValue()).toString();
+                    reusmeText.setText("Click here to see resume");
+                }
+            }
+        });
     }
 
     private void selectPDF() {
+        showSimpleProgressDialog(getContext(), "Loading", "Loading File", false);
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(intent.ACTION_GET_CONTENT);
@@ -146,10 +200,17 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 12 && resultCode==RESULT_OK && data != null && data.getData() != null){
             uploadPDF(data.getData());
+        } else {
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
+        removeSimpleProgressDialog();
     }
 
     private void uploadPDF(Uri data) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("File is uploading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         StorageReference reference = storageReference.child("resume" + System.currentTimeMillis() + ".pdf");
 
         reference.putFile(data).addOnSuccessListener(taskSnapshot -> {
@@ -164,10 +225,12 @@ public class ProfileFragment extends Fragment {
             assert uri != null;
             ref.child(uid).child("resumeLink").setValue(uri.toString()).addOnCompleteListener(task -> {
                 Toast.makeText(getContext(), "Resume Added Successfully", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             });
 
         }).addOnProgressListener(snapshot -> {
             double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+            progressDialog.setMessage("File uploaded " + progress + "%");
         });
     }
 
@@ -294,6 +357,36 @@ public class ProfileFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("resume");
+        ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid());
+        reusmeText = view.findViewById(R.id.resume_text);
+    }
 
+    public static void removeSimpleProgressDialog() {
+        try {
+            if (mProgressDialog != null) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+            }
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
+    }
+
+    public static void showSimpleProgressDialog(Context context, String title, String msg, boolean isCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = ProgressDialog.show(context, title, msg);
+                mProgressDialog.setCancelable(isCancelable);
+            }
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
     }
 }

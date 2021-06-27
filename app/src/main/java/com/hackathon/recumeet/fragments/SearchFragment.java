@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -87,6 +88,10 @@ public class SearchFragment extends Fragment {
                 users.clear();
                 for(DataSnapshot snapshot2 :snapshot.getChildren()){
                     User user = snapshot2.getValue(User.class);
+                    assert user != null;
+                    if(user.getuId().equals(FirebaseAuth.getInstance().getUid())){
+                        continue;
+                    }
                     users.add(user);
                 }
                 userAdapter.notifyDataSetChanged();
