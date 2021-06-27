@@ -62,11 +62,13 @@ class ChannelFragment : Fragment() {
                     val name = it.child("FName").value.toString() +
                             " " +
                             it.child("LName").value.toString()
+                    val profileUri = it.child("ProfileUri").value.toString()
 
                     user = User(
                         id = fireClass.uid,
                         extraData = mutableMapOf(
-                            "name" to name
+                            "name" to name,
+                            "image" to profileUri
                         )
                     )
 
