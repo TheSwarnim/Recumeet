@@ -1,6 +1,7 @@
 package com.hackathon.recumeet.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class FeedFragment extends Fragment {
     private FirebaseUser fUser;
 
     LinearLayoutManager linearLayoutManager;
+    private static ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,9 +108,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void createPostList() {
-        final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Please Wait");
-        pd.show();
+        showSimpleProgressDialog(getContext(), "Loading", "Fetching Posts", false);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("posts");
         ref.keepSynced(true);
@@ -133,26 +133,54 @@ public class FeedFragment extends Fragment {
 
                             postAdapter = new PostAdapter(getContext(), postList);
                             recyclerViewPosts.setAdapter(postAdapter);
-                            pd.dismiss();
+                            removeSimpleProgressDialog();
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+                            removeSimpleProgressDialog();
                         }
                     });
                 }
-                pd.dismiss();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                pd.dismiss();
+                removeSimpleProgressDialog();
             }
         });
+    }
+
+    public static void removeSimpleProgressDialog() {
+        try {
+            if (mProgressDialog != null) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+            }
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
+    }
+
+    public static void showSimpleProgressDialog(Context context, String title, String msg, boolean isCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = ProgressDialog.show(context, title, msg);
+                mProgressDialog.setCancelable(isCancelable);
+            }
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+
+        } catch (Exception ie) {
+            ie.printStackTrace();
+        }
     }
 
     private void Init() {

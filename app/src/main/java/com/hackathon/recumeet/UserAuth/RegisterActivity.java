@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         // start
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         ProgressBar progressBar = findViewById(R.id.spin_kit);
         progressBar.setVisibility(View.GONE);
         Init();
