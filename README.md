@@ -1,4 +1,10 @@
 # Recumeet
+Connecting Professionals and Students for Growth and Learning
+
+![recumeet](https://github.com/TheSwarnim/Recumeet/assets/54211377/fee830c0-be77-4dff-b705-48ac6b63c1af)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Recumeet is an Android application designed to revolutionize professional networking and mentorship, particularly for students aspiring to either jumpstart or navigate through their career paths. Our platform aids in building and strengthening professional relationships, infusing new opportunities for interaction and discovery. It seamlessly bridges the gaps between job seekers, recruiters, mentors, and fellow professionals.
 ## The Problem Recumeet is Tackling
 In a world saturated with digital interfaces, robust interaction often becomes a dwindling commodity. Recumeet aims to tackle these key issues:
@@ -15,6 +21,10 @@ While other platforms focus mainly on professional networking by allowing job se
 3. Robust networking features
 4. Seamless mentor-mentee connection
 5. Explore new technology and upgrade your skill set
+
+# Screenshots
+![screnshots](https://github.com/TheSwarnim/Recumeet/assets/54211377/91994288-6d4a-4122-92e3-3af987da9ced)
+![some more schreenshot](https://github.com/TheSwarnim/Recumeet/assets/54211377/18372290-5177-47c0-9d2d-27d51ac7563b)
 
 # Contributing to RecuMeet
 
