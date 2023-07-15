@@ -94,3 +94,5 @@ Thank you for contributing to RecuMeet! To maintain a consistent codebase and en
 By contributing to RecuMeet, you agree that your contributions will be licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 Thank you for your commitment to maintaining a high standard of code quality and contributing to the success of RecuMeet!
+
+App Download Link : https://drive.google.com/file/d/1BJI2HUMg5te4KWwYJAUpV0R-UwTC5PV0/view?usp=sharing
